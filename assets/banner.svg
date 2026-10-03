@@ -2,9 +2,9 @@
   <style>
     .bg { fill: #FFF4E4; }
     .dot { fill: #F2D9B8; }
-    .name { fill: #3B2A20; font: 800 76px 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif; letter-spacing: -1px; }
-    .role { fill: #E8734A; font: 700 28px 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif; }
-    .tag { fill: #6E5A4C; font: 500 22px 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif; }
+    .name { fill: #3B2A20; font: 800 100px 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif; letter-spacing: -1px; }
+    .role { fill: #E8734A; font: 700 38px 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif; }
+    .tag { fill: #6E5A4C; font: 600 32px 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif; }
     .guide { fill: none; stroke: #E9D5BC; stroke-width: 6; stroke-linejoin: round; stroke-dasharray: 2 14; stroke-linecap: round; }
     .rope { fill: none; stroke: #F29E4C; stroke-width: 10; stroke-linejoin: round; stroke-linecap: round;
             stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw 6s ease-in-out infinite; }
@@ -44,9 +44,10 @@
     <circle class="dot" cx="1100" cy="180" r="4"/><circle class="dot" cx="820" cy="150" r="4"/>
   </g>
 
-  <text class="name" x="80" y="128">Minari</text>
-  <text class="role" x="84" y="176">Game System Designer · 게임 시스템 기획</text>
-  <text class="tag" x="84" y="220">아이디어를 프로토타입으로 만들고, 플레이하며 재미를 검증합니다.</text>
+  <text class="name" x="76" y="112">Minari</text>
+  <text class="role" x="82" y="166">Game System Designer · 게임 시스템 기획</text>
+  <text class="tag" x="82" y="214">아이디어를 프로토타입으로 만들고,</text>
+  <text class="tag" x="82" y="256">플레이하며 재미를 검증합니다.</text>
 
   <!-- 쭉쭉냥처럼: 접시 다섯 개를 한붓으로 감아 별 그리기 -->
   <g transform="translate(40,5)">

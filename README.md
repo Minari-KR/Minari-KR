@@ -16,9 +16,7 @@
 **게임 시스템 기획자 Minari**입니다. 규칙 하나로 오래 노는 퍼즐과, 손맛이 살아 있는 액션을 좋아해요.
 기획서로만 끝내지 않고 **직접 만들어 플레이해 보고**, 숫자와 테스트로 재미를 확인합니다.
 
-<p align="center">
-  <b>💡 아이디어 → 🛠️ 프로토타입 → 🎮 플레이테스트 → 📊 숫자로 다듬기 → 🔁 다시</b>
-</p>
+<h3 align="center">💡 아이디어 → 🛠️ 프로토타입 → 🎮 플레이테스트 → 📊 숫자로 다듬기 → 🔁 다시</h3>
 
 <br>
 
@@ -29,11 +27,11 @@
     <td colspan="2" align="center">
       <img src="assets/zzukzzuk-icon.png" width="96" alt="쭉쭉냥 아이콘">
       <h3>🐱 쭉쭉냥 — 고양이 퍼즐</h3>
-      <sub>개인 프로젝트 · 2026 · 기획과 개발 전부</sub><br><br>
+      <b>개인 프로젝트 · 2026 · 기획과 개발 전부</b><br><br>
       쭉쭉 늘어나는 냥이를 연어 접시에 감아서, 견본 그림을 <b>한붓에</b> 그리는 퍼즐<br><br>
-      <img src="https://img.shields.io/badge/Unity_6-222?logo=unity&logoColor=white" alt="Unity">
-      <img src="https://img.shields.io/badge/Android-비공개_테스트_중-3DDC84?logo=android&logoColor=white" alt="Android">
-      <img src="https://img.shields.io/badge/PC_·_Web-빌드_완료-0078D4" alt="PC Web">
+      <img src="https://img.shields.io/badge/Unity_6-222?style=for-the-badge&logo=unity&logoColor=white" alt="Unity">
+      <img src="https://img.shields.io/badge/Android-비공개_테스트_중-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android">
+      <img src="https://img.shields.io/badge/PC_·_Web-빌드_완료-0078D4?style=for-the-badge" alt="PC Web">
     </td>
   </tr>
   <tr>
@@ -43,7 +41,7 @@
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <b>📐 무엇을 기획했나</b>
+      <h3>📐 무엇을 기획했나</h3>
       <ul>
         <li>레벨 <b>100개</b> + 튜토리얼 4단계</li>
         <li>10판마다 한 번 찾아오는 <b>고비 레벨</b></li>
@@ -53,7 +51,7 @@
       </ul>
     </td>
     <td width="50%" valign="top">
-      <b>🔍 어떻게 검증했나</b>
+      <h3>🔍 어떻게 검증했나</h3>
       <ul>
         <li>레벨마다 <b>난이도 점수</b>를 계산해서 순서 정렬</li>
         <li>모든 레벨의 정답을 기계가 <b>직접 풀어 보는</b> 테스트</li>
@@ -125,16 +123,16 @@
 ## 🛠️ Tools
 
 <p>
-  <img src="https://img.shields.io/badge/Unity-222?style=flat-square&logo=unity&logoColor=white" alt="Unity">
-  <img src="https://img.shields.io/badge/C%23-512BD4?style=flat-square&logo=dotnet&logoColor=white" alt="C#">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript">
-  <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white" alt="Git">
-  <img src="https://img.shields.io/badge/Claude_Code-D97757?style=flat-square&logo=claude&logoColor=white" alt="Claude Code">
+  <img src="https://img.shields.io/badge/Unity-222?style=for-the-badge&logo=unity&logoColor=white" alt="Unity">
+  <img src="https://img.shields.io/badge/C%23-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt="C#">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
+  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git">
+  <img src="https://img.shields.io/badge/Claude_Code-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Claude Code">
 </p>
 
 <br>
 
 <div align="center">
-<sub>🌏 Game system designer from Korea · I build playable prototypes and tune the fun with numbers and playtests.</sub>
+🌏 Game system designer from Korea · I build playable prototypes and tune the fun with numbers and playtests.
 </div>

@@ -4,8 +4,8 @@
 
 <br>
 
-<a href="https://minari-kr.github.io/Minari.github.io/"><img src="https://img.shields.io/badge/Portfolio-포트폴리오-F29E4C?style=for-the-badge&logo=githubpages&logoColor=white" alt="Portfolio"></a>
-<a href="https://minari-kr.itch.io/"><img src="https://img.shields.io/badge/itch.io-게임_해보기-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white" alt="itch.io"></a>
+<a href="https://minari-kr.github.io/Minari.github.io/"><img src="https://img.shields.io/badge/%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4_%EB%B3%B4%EA%B8%B0-F29E4C?style=for-the-badge&logo=github&logoColor=white" alt="Portfolio"></a>
+<a href="https://minari-kr.itch.io/"><img src="https://img.shields.io/badge/itch.io%EC%97%90%EC%84%9C_%EA%B2%8C%EC%9E%84_%ED%95%B4%EB%B3%B4%EA%B8%B0-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white" alt="itch.io"></a>
 
 </div>
 
@@ -30,8 +30,8 @@
       <b>개인 프로젝트 · 2026 · 기획과 개발 전부</b><br><br>
       쭉쭉 늘어나는 냥이를 연어 접시에 감아서, 견본 그림을 <b>한붓에</b> 그리는 퍼즐<br><br>
       <img src="https://img.shields.io/badge/Unity_6-222?style=for-the-badge&logo=unity&logoColor=white" alt="Unity">
-      <img src="https://img.shields.io/badge/Android-비공개_테스트_중-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android">
-      <img src="https://img.shields.io/badge/PC_·_Web-빌드_완료-0078D4?style=for-the-badge" alt="PC Web">
+      <img src="https://img.shields.io/badge/Android-%EB%B9%84%EA%B3%B5%EA%B0%9C_%ED%85%8C%EC%8A%A4%ED%8A%B8_%EC%A4%91-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android">
+      <img src="https://img.shields.io/badge/PC_%C2%B7_Web-%EB%B9%8C%EB%93%9C_%EC%99%84%EB%A3%8C-0078D4?style=for-the-badge" alt="PC Web">
     </td>
   </tr>
   <tr>

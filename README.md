@@ -13,10 +13,11 @@
 
 ## 🐾 About
 
-**게임 시스템 기획자 Minari**입니다. 규칙 하나로 오래 노는 퍼즐과, 손맛이 살아 있는 액션을 좋아해요.
-기획서로만 끝내지 않고 **직접 만들어 플레이해 보고**, 숫자와 테스트로 재미를 확인합니다.
+**게임 시스템 기획자 Minari**입니다.
 
-<h3 align="center">💡 아이디어 → 🛠️ 프로토타입 → 🎮 플레이테스트 → 📊 숫자로 다듬기 → 🔁 다시</h3>
+- 팀 프로젝트 2개에서 **기획과 팀장**을 맡았습니다 (3일 게임잼, 7개월 장기 프로젝트).
+- 개인 프로젝트 **쭉쭉냥**은 기획부터 개발, 스토어 출시 준비까지 혼자 하고 있습니다.
+- 기획 의도를 **규칙과 숫자**로 정하고, 그대로 동작하는지 **직접 만든 도구와 자동 테스트**로 확인합니다. 아래 쭉쭉냥 표에 그 방법을 정리했습니다.
 
 <br>
 
@@ -28,7 +29,8 @@
       <img src="assets/zzukzzuk-icon.png" width="96" alt="쭉쭉냥 아이콘">
       <h3>🐱 쭉쭉냥 — 고양이 퍼즐</h3>
       <b>개인 프로젝트 · 2026 · 기획과 개발 전부</b><br><br>
-      쭉쭉 늘어나는 냥이를 연어 접시에 감아서, 견본 그림을 <b>한붓에</b> 그리는 퍼즐<br><br>
+      쭉쭉 늘어나는 냥이를 연어 접시에 감아서, 견본 그림을 <b>한붓에</b> 그리는 퍼즐<br>
+      레벨 100개 · 튜토리얼 4단계 · 매일 3문제 일일 도전 · 연속 기록 메달<br><br>
       <img src="https://img.shields.io/badge/Unity_6-222?style=for-the-badge&logo=unity&logoColor=white" alt="Unity">
       <img src="https://img.shields.io/badge/Android-%EB%B9%84%EA%B3%B5%EA%B0%9C_%ED%85%8C%EC%8A%A4%ED%8A%B8_%EC%A4%91-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android">
       <img src="https://img.shields.io/badge/PC_%C2%B7_Web-%EB%B9%8C%EB%93%9C_%EC%99%84%EB%A3%8C-0078D4?style=for-the-badge" alt="PC Web">
@@ -40,26 +42,28 @@
     </td>
   </tr>
   <tr>
-    <td width="50%" valign="top">
-      <h3>📐 무엇을 기획했나</h3>
-      <ul>
-        <li>레벨 <b>100개</b> + 튜토리얼 4단계</li>
-        <li>10판마다 한 번 찾아오는 <b>고비 레벨</b></li>
-        <li>날짜만으로 매일 새로 만들어지는 <b>일일 도전</b> 3문제</li>
-        <li>연속 기록 <b>메달</b>과 메달 도감</li>
-        <li>막히면 단계별로 열리는 <b>힌트</b></li>
-      </ul>
-    </td>
-    <td width="50%" valign="top">
-      <h3>🔍 어떻게 검증했나</h3>
-      <ul>
-        <li>레벨마다 <b>난이도 점수</b>를 계산해서 순서 정렬</li>
-        <li>모든 레벨의 정답을 기계가 <b>직접 풀어 보는</b> 테스트</li>
-        <li>자동 테스트 <b>879개</b>, 모두 통과</li>
-        <li>레벨 편집기와 검사기를 직접 만들어 사용</li>
-        <li>테스터 12명과 비공개 테스트 진행</li>
-      </ul>
-    </td>
+    <th width="38%" align="left">🎯 기획 의도</th>
+    <th align="left">🔍 만든 방법과 확인 방법</th>
+  </tr>
+  <tr>
+    <td valign="top">쉬운 레벨부터 천천히 오르고, 10판마다 한 번 확 어려운 <b>고비 레벨</b>이 오게</td>
+    <td valign="top">그림만 보고 <b>난이도 점수</b>를 내는 식을 만들었습니다. 선 개수, 3갈래 이상 만나는 접시, 같은 접시를 다시 지나는 횟수, 꺾임과 교차, 막다른 길로 빠질 확률 등을 더합니다. 이 점수로 100개를 10판씩 정렬하고, 고비 레벨은 앞 9판 평균보다 <b>2.5점 이상</b> 높은 것으로 고릅니다.</td>
+  </tr>
+  <tr>
+    <td valign="top">새 기술이 필요한 레벨보다 그 기술을 <b>알려 주는 레벨</b>이 먼저 나오게</td>
+    <td valign="top">기술(교차, 같은 접시 다시 지나기, 갈림길 등)마다 힌트로 가르치는 레벨을 정해 두고, 정렬 스크립트가 그 레벨을 기술이 처음 필요한 레벨 앞으로 당깁니다. 고비 레벨도 기술을 배우기 전에는 나오지 않습니다.</td>
+  </tr>
+  <tr>
+    <td valign="top">100개 레벨 모두 <b>반드시 풀 수 있게</b></td>
+    <td valign="top">레벨마다 저장된 정답 순서를 게임 규칙 그대로 다시 그려 보는 자동 테스트를 돌립니다 (튜토리얼 포함). 전체 자동 테스트는 <b>879개</b>, 모두 통과합니다.</td>
+  </tr>
+  <tr>
+    <td valign="top">서버 없이 <b>날짜만으로</b> 모두에게 같은 일일 도전 3문제</td>
+    <td valign="top">날짜를 씨앗으로 문제를 만들고, 만든 문제마다 위와 같은 정답 풀이 검사를 거칩니다. 통과하지 못하면 기존 레벨을 뒤집어 대신 냅니다.</td>
+  </tr>
+  <tr>
+    <td valign="top">막혀도 <b>답을 바로 주지 않고</b> 조금씩 돕게</td>
+    <td valign="top">힌트가 그림 다시 보기 → 힌트 문장 → 시작 접시 표시 순서로 열립니다. 열리는 시간은 레벨의 난이도 점수에 맞춥니다.</td>
   </tr>
 </table>
 
@@ -70,7 +74,7 @@
     <td width="50%" valign="top">
       <a href="https://minari-kr.itch.io/reflectory"><img src="assets/reflectory.png" width="100%" alt="Reflectory"></a>
       <h3>🪞 Reflectory</h3>
-      반사를 이용하는 퍼즐 · 2026 대전 inD 게임잼 (3일)<br>
+      퍼즐 · 2026 대전 inD 게임잼 (3일)<br>
       4인 팀 <b>기획 · 팀장</b><br><br>
       🏅 <b>국가수리과학연구장상</b><br><br>
       <a href="https://minari-kr.itch.io/reflectory">▶ 브라우저에서 플레이</a>
@@ -134,5 +138,5 @@
 <br>
 
 <div align="center">
-🌏 Game system designer from Korea · I build playable prototypes and tune the fun with numbers and playtests.
+🌏 Game system designer from Korea
 </div>

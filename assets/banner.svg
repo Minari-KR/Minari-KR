@@ -46,8 +46,8 @@
 
   <text class="name" x="76" y="112">Minari</text>
   <text class="role" x="82" y="166">Game System Designer · 게임 시스템 기획</text>
-  <text class="tag" x="82" y="214">아이디어를 프로토타입으로 만들고,</text>
-  <text class="tag" x="82" y="256">플레이하며 재미를 검증합니다.</text>
+  <text class="tag" x="82" y="214">기획 의도를 규칙과 숫자로 정하고,</text>
+  <text class="tag" x="82" y="256">도구와 테스트로 확인합니다.</text>
 
   <!-- 쭉쭉냥처럼: 접시 다섯 개를 한붓으로 감아 별 그리기 -->
   <g transform="translate(40,5)">

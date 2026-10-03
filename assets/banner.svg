@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" width="1200" height="300" role="img" aria-label="Minari · Game System Designer">
+  <style>
+    .bg { fill: #FFF4E4; }
+    .dot { fill: #F2D9B8; }
+    .name { fill: #3B2A20; font: 800 76px 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif; letter-spacing: -1px; }
+    .role { fill: #E8734A; font: 700 28px 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif; }
+    .tag { fill: #6E5A4C; font: 500 22px 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif; }
+    .guide { fill: none; stroke: #E9D5BC; stroke-width: 6; stroke-linejoin: round; stroke-dasharray: 2 14; stroke-linecap: round; }
+    .rope { fill: none; stroke: #F29E4C; stroke-width: 10; stroke-linejoin: round; stroke-linecap: round;
+            stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw 6s ease-in-out infinite; }
+    .peg { fill: #F4845F; stroke: #FFFFFF; stroke-width: 6; }
+    .peg-in { fill: #FFD0BC; }
+    .peg-start { animation: pulse 6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+    @keyframes draw {
+      0%   { stroke-dashoffset: 1000; opacity: 1; }
+      60%  { stroke-dashoffset: 0;    opacity: 1; }
+      85%  { stroke-dashoffset: 0;    opacity: 1; }
+      100% { stroke-dashoffset: 0;    opacity: 0; }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      8%       { transform: scale(1.25); }
+      16%      { transform: scale(1); }
+    }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #1E1B2E; }
+      .dot { fill: #2C2842; }
+      .name { fill: #FFF4E4; }
+      .role { fill: #FF9B6E; }
+      .tag { fill: #C9BFD8; }
+      .guide { stroke: #3A3555; }
+      .peg { stroke: #1E1B2E; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .rope { animation: none; stroke-dashoffset: 0; }
+      .peg-start { animation: none; }
+    }
+  </style>
+
+  <rect class="bg" width="1200" height="300" rx="28"/>
+  <g>
+    <circle class="dot" cx="760" cy="40" r="5"/><circle class="dot" cx="1130" cy="60" r="7"/>
+    <circle class="dot" cx="1150" cy="250" r="5"/><circle class="dot" cx="790" cy="260" r="7"/>
+    <circle class="dot" cx="1100" cy="180" r="4"/><circle class="dot" cx="820" cy="150" r="4"/>
+  </g>
+
+  <text class="name" x="80" y="128">Minari</text>
+  <text class="role" x="84" y="176">Game System Designer · 게임 시스템 기획</text>
+  <text class="tag" x="84" y="220">아이디어를 프로토타입으로 만들고, 플레이하며 재미를 검증합니다.</text>
+
+  <!-- 쭉쭉냥처럼: 접시 다섯 개를 한붓으로 감아 별 그리기 -->
+  <g transform="translate(40,5)">
+  <path class="guide" d="M960,50 L1021.7,239.9 L860.1,122.6 L1059.9,122.6 L898.3,239.9 Z"/>
+  <path class="rope"  d="M960,50 L1021.7,239.9 L860.1,122.6 L1059.9,122.6 L898.3,239.9 Z"/>
+  <g>
+    <g class="peg-start"><circle class="peg" cx="960" cy="50" r="17"/><circle class="peg-in" cx="960" cy="50" r="6"/></g>
+    <circle class="peg" cx="1059.9" cy="122.6" r="17"/><circle class="peg-in" cx="1059.9" cy="122.6" r="6"/>
+    <circle class="peg" cx="1021.7" cy="239.9" r="17"/><circle class="peg-in" cx="1021.7" cy="239.9" r="6"/>
+    <circle class="peg" cx="898.3" cy="239.9" r="17"/><circle class="peg-in" cx="898.3" cy="239.9" r="6"/>
+    <circle class="peg" cx="860.1" cy="122.6" r="17"/><circle class="peg-in" cx="860.1" cy="122.6" r="6"/>
+  </g>
+  </g>
+</svg>

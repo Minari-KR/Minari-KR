@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 572" width="1200" height="572" role="img" aria-label="수상: 2026 국가수리과학연구장상, 2025 대전 게임 브릿지 대상, 2025 스토브 크루 베스트 리더상, 2020 넷마블게임아카데미 우수상. 실적: 2025 부산 BIC 전시">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 572" width="1200" height="572" role="img" aria-label="수상: 2026 국가수리과학연구소장상, 2025 대전 게임 브릿지 대상, 2025 스토브 크루 베스트 리더상, 2020 넷마블게임아카데미 우수상. 실적: 2025 부산 BIC 전시">
   <style>
     .bg { fill: #FFF4E4; }
     .card { fill: #FFFFFF; stroke: #F2D9B8; stroke-width: 3; }
@@ -29,7 +29,7 @@
   <circle class="medal" cx="110" cy="129" r="50"/>
   <circle class="medal-ring" cx="110" cy="129" r="41"/>
   <text class="year" x="110" y="139" text-anchor="middle">2026</text>
-  <text class="award" x="186" y="106">국가수리과학연구장상</text>
+  <text class="award" x="186" y="106">국가수리과학연구소장상</text>
   <text class="event" x="186" y="148">Reflectory</text>
   <text class="role" x="186" y="182">대전 inD 게임잼 · 기획 · 팀장</text>
   <rect class="card" x="610" y="28" width="562" height="190" rx="22"/>

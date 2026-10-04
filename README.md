@@ -19,7 +19,7 @@
 
 ## 🏆 수상 및 실적
 
-<img src="assets/awards.svg" width="100%" alt="수상: 2026 국가수리과학연구장상(Reflectory), 2025 대전 게임 브릿지 대상(Barrel Good Barrel), 2025 스토브 크루 2기 베스트 리더상, 2020 넷마블게임아카데미 5기 우수상(Rhythm Shooter). 실적: 부산 BIC 2025 전시(Barrel Good Barrel)">
+<img src="assets/awards.svg" width="100%" alt="수상: 2026 국가수리과학연구소장상(Reflectory), 2025 대전 게임 브릿지 대상(Barrel Good Barrel), 2025 스토브 크루 2기 베스트 리더상, 2020 넷마블게임아카데미 5기 우수상(Rhythm Shooter). 실적: 부산 BIC 2025 전시(Barrel Good Barrel)">
 
 <br>
 
@@ -39,7 +39,7 @@
       <a href="https://minari-kr.itch.io/reflectory"><img src="assets/reflectory.png" width="100%" alt="Reflectory"></a>
       <h3>🪞 Reflectory</h3>
       4인 팀 <b>기획 · 팀장</b> · 3일 게임잼<br>
-      🏅 <b>국가수리과학연구장상</b><br><br><br>
+      🏅 <b>국가수리과학연구소장상</b><br><br><br>
       <a href="https://minari-kr.itch.io/reflectory">▶ 플레이</a>
     </td>
     <td width="33%" valign="top">

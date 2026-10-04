@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 572" width="1200" height="572" role="img" aria-label="수상: 2026 국가수리과학연구장상, 2025 대전 게임 브릿지 대상, 2025 스토브 크루 베스트 리더상, 2020 넷마블게임아카데미 우수상. 실적: 2025 부산 BIC 전시">
+  <style>
+    .bg { fill: #FFF4E4; }
+    .card { fill: #FFFFFF; stroke: #F2D9B8; stroke-width: 3; }
+    .medal { fill: #F29E4C; }
+    .medal-ring { fill: none; stroke: #FFFFFF; stroke-width: 4; stroke-dasharray: 3 7; stroke-linecap: round; }
+    .ribbon { fill: #F4845F; }
+    .year { fill: #FFFFFF; font: 800 27px 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif; }
+    .award { fill: #3B2A20; font: 800 38px 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif; letter-spacing: -0.5px; }
+    .event { fill: #E8734A; font: 700 26px 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif; }
+    .role { fill: #6E5A4C; font: 600 22px 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif; }
+    .strip { fill: #3B2A20; }
+    .strip-label { fill: #F29E4C; font: 800 26px 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif; }
+    .strip-text { fill: #FFF4E4; font: 700 30px 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #1E1B2E; }
+      .card { fill: #2A2640; stroke: #3A3555; }
+      .award { fill: #FFF4E4; }
+      .event { fill: #FF9B6E; }
+      .role { fill: #C9BFD8; }
+      .strip { fill: #FFF4E4; }
+      .strip-label { fill: #E8734A; }
+      .strip-text { fill: #3B2A20; }
+    }
+  </style>
+  <rect class="bg" width="1200" height="572" rx="28"/>
+  <rect class="card" x="28" y="28" width="562" height="190" rx="22"/>
+  <path class="ribbon" d="M80,49 L102,49 L116,95 L94,95 Z M140,49 L118,49 L104,95 L126,95 Z"/>
+  <circle class="medal" cx="110" cy="129" r="50"/>
+  <circle class="medal-ring" cx="110" cy="129" r="41"/>
+  <text class="year" x="110" y="139" text-anchor="middle">2026</text>
+  <text class="award" x="186" y="106">국가수리과학연구장상</text>
+  <text class="event" x="186" y="148">Reflectory</text>
+  <text class="role" x="186" y="182">대전 inD 게임잼 · 기획 · 팀장</text>
+  <rect class="card" x="610" y="28" width="562" height="190" rx="22"/>
+  <path class="ribbon" d="M662,49 L684,49 L698,95 L676,95 Z M722,49 L700,49 L686,95 L708,95 Z"/>
+  <circle class="medal" cx="692" cy="129" r="50"/>
+  <circle class="medal-ring" cx="692" cy="129" r="41"/>
+  <text class="year" x="692" y="139" text-anchor="middle">2025</text>
+  <text class="award" x="768" y="106">대전 게임 브릿지 대상</text>
+  <text class="event" x="768" y="148">Barrel Good Barrel</text>
+  <text class="role" x="768" y="182">대전 inD 게임어스 · 기획 · 팀장</text>
+  <rect class="card" x="28" y="238" width="562" height="190" rx="22"/>
+  <path class="ribbon" d="M80,259 L102,259 L116,305 L94,305 Z M140,259 L118,259 L104,305 L126,305 Z"/>
+  <circle class="medal" cx="110" cy="339" r="50"/>
+  <circle class="medal-ring" cx="110" cy="339" r="41"/>
+  <text class="year" x="110" y="349" text-anchor="middle">2025</text>
+  <text class="award" x="186" y="316">베스트 리더상</text>
+  <text class="event" x="186" y="358">스토브 크루 2기</text>
+  <text class="role" x="186" y="392">인디 게임 숏폼 기획 · 제작</text>
+  <rect class="card" x="610" y="238" width="562" height="190" rx="22"/>
+  <path class="ribbon" d="M662,259 L684,259 L698,305 L676,305 Z M722,259 L700,259 L686,305 L708,305 Z"/>
+  <circle class="medal" cx="692" cy="339" r="50"/>
+  <circle class="medal-ring" cx="692" cy="339" r="41"/>
+  <text class="year" x="692" y="349" text-anchor="middle">2020</text>
+  <text class="award" x="768" y="316">우수상</text>
+  <text class="event" x="768" y="358">Rhythm Shooter</text>
+  <text class="role" x="768" y="392">넷마블게임아카데미 5기 · 기획</text>
+  <rect class="strip" x="28" y="448" width="1144" height="96" rx="22"/>
+  <text class="strip-label" x="68" y="506">실적</text>
+  <text class="strip-text" x="158" y="507">부산 BIC 2025 전시 · Barrel Good Barrel</text>
+</svg>

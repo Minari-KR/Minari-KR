@@ -2,11 +2,6 @@
 
 <img src="assets/banner.svg" width="100%" alt="Minari · Game System Designer">
 
-<br>
-
-<a href="https://minari-kr.github.io/Minari.github.io/"><img src="https://img.shields.io/badge/%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4_%EB%B3%B4%EA%B8%B0-F29E4C?style=for-the-badge&logo=github&logoColor=white" alt="Portfolio"></a>
-<a href="https://minari-kr.itch.io/"><img src="https://img.shields.io/badge/itch.io%EC%97%90%EC%84%9C_%EA%B2%8C%EC%9E%84_%ED%95%B4%EB%B3%B4%EA%B8%B0-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white" alt="itch.io"></a>
-
 </div>
 
 <br>

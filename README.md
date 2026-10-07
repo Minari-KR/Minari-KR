@@ -22,10 +22,10 @@
 <table>
   <tr>
     <td width="50%" valign="middle">
-      <a href="https://minari-kr.itch.io/barrel-good-barrel"><img src="assets/barrel-good-barrel.png" width="100%" alt="🛢️ Barrel Good Barrel"></a>
+      <a href="https://minari-kr.itch.io/barrel-good-barrel"><img src="assets/barrel-good-barrel.png" width="100%" alt="Barrel Good Barrel"></a>
     </td>
     <td width="50%" valign="middle">
-      <h2>🛢️ Barrel Good Barrel</h2>
+      <h2>Barrel Good Barrel</h2>
       <h3>3인 팀 기획 · 팀장 · 7개월</h3>
       <h3>🏅 대전 게임 브릿지 대상</h3>
       <h3>🎪 부산 BIC 2025 전시</h3>
@@ -34,10 +34,10 @@
   </tr>
   <tr>
     <td width="50%" valign="middle">
-      <a href="https://minari-kr.itch.io/reflectory"><img src="assets/reflectory.png" width="100%" alt="🪞 Reflectory"></a>
+      <a href="https://minari-kr.itch.io/reflectory"><img src="assets/reflectory.png" width="100%" alt="Reflectory"></a>
     </td>
     <td width="50%" valign="middle">
-      <h2>🪞 Reflectory</h2>
+      <h2>Reflectory</h2>
       <h3>4인 팀 기획 · 팀장 · 3일 게임잼</h3>
       <h3>🏅 국가수리과학연구소장상</h3>
       <h3><a href="https://minari-kr.itch.io/reflectory">▶ 브라우저에서 플레이</a></h3>
@@ -45,26 +45,13 @@
   </tr>
   <tr>
     <td width="50%" valign="middle">
-      <img src="assets/zzukzzuk-card.png" width="100%" alt="🐱 쭉쭉냥">
+      <img src="assets/zzukzzuk-card.png" width="100%" alt="쭉쭉냥">
     </td>
     <td width="50%" valign="middle">
-      <h2>🐱 쭉쭉냥</h2>
+      <h2>쭉쭉냥</h2>
       <h3>1인 개발 · 기획부터 출시 준비까지</h3>
       <h3>📦 레벨 100개 · 자동 테스트 879개 통과</h3>
       <h3>📱 Android 비공개 테스트 중</h3>
     </td>
   </tr>
 </table>
-
-<br>
-
-## 🛠️ Tools
-
-<p>
-  <img src="https://img.shields.io/badge/Unity-222?style=for-the-badge&logo=unity&logoColor=white" alt="Unity">
-  <img src="https://img.shields.io/badge/C%23-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" alt="C#">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
-  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git">
-  <img src="https://img.shields.io/badge/Claude_Code-D97757?style=for-the-badge&logo=claude&logoColor=white" alt="Claude Code">
-</p>

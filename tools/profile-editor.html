@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>프로필 그림 편집기</title>
+<style>
+  :root { --bg:#0d1117; --panel:#161b22; --line:#30363d; --text:#e6edf3; --sub:#8b949e; --accent:#FF9B6E; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:14px/1.5 'Pretendard','Malgun Gothic',sans-serif; }
+  header { position:sticky; top:0; z-index:5; background:var(--bg); border-bottom:1px solid var(--line); padding:12px 16px; }
+  .bar { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:10px; }
+  .bar h1 { font-size:16px; margin:0 auto 0 0; }
+  button { background:var(--panel); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:7px 12px; font:inherit; cursor:pointer; }
+  button:hover { border-color:var(--sub); }
+  button.primary { background:var(--accent); color:#1E1B2E; border-color:var(--accent); font-weight:700; }
+  #preview svg { width:100%; height:auto; display:block; }
+  #msg { color:var(--accent); font-size:13px; min-height:1em; }
+  main { padding:16px; display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:12px; }
+  details { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:10px 14px; }
+  summary { cursor:pointer; font-weight:700; }
+  .row { display:grid; grid-template-columns:110px 1fr 52px; gap:8px; align-items:center; margin-top:8px; }
+  .row.text { grid-template-columns:110px 1fr; }
+  .row label { color:var(--sub); font-size:13px; }
+  .row output { text-align:right; color:var(--sub); font-size:12px; }
+  input[type=text] { width:100%; background:var(--bg); color:var(--text); border:1px solid var(--line); border-radius:6px; padding:5px 8px; font:inherit; }
+  input[type=range] { width:100%; }
+  input[type=color] { width:100%; height:28px; background:none; border:1px solid var(--line); border-radius:6px; }
+  .tog { color:var(--sub); font-size:13px; display:flex; gap:4px; align-items:center; }
+  .hint { color:var(--sub); font-size:12px; margin:6px 0 0; }
+  #preview [data-drag] { cursor:move; }
+  #preview [data-drag]:hover { outline:1px dashed #FF4FD8; }
+  .award-title { margin:12px 0 0; color:var(--accent); font-size:13px; font-weight:700; }
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <h1>프로필 그림 편집기</h1>
+    <span id="msg"></span>
+    <label class="tog"><input type="checkbox" id="snap" checked> 스냅</label>
+    <label class="tog"><input type="checkbox" id="editMode"> 움직임 멈추고 전부 보기</label>
+    <button id="reset">처음 값으로</button>
+    <button id="copy">SVG 코드 복사</button>
+    <button id="save" class="primary">SVG 저장</button>
+  </div>
+  <div id="preview"></div>
+  <p class="hint">미리보기에서 글자 묶음, 적 줄, 단어 줄, 우주선, 클리어 문구를 끌어서 옮길 수 있어요. 기준선 근처에서 자석처럼 붙고 분홍 안내선이 떠요. Alt를 누른 채 끌면 스냅 없이 옮겨요. Ctrl+Z로 되돌리고, Ctrl+Shift+Z(또는 Ctrl+Y)로 다시 할 수 있어요.</p>
+</header>
+<main id="controls"></main>
+
+<script>
+(function () {
+  // ---- 기본값: 지금 프로필 그림과 같은 값 ----
+  const DEFAULTS = {
+    name: 'Minari', title: 'Game Designer',
+    tag1: '아이디어를 프로토타입으로 만들고,', tag2: '플레이하며 재미를 검증합니다.',
+    textX: 45, textY: 70, nameSize: 37, titleSize: 18, tagSize: 15, lineGap: 21,
+    bannerH: 190, stageX: 329, gap: 90, enemyY: 63, scale: 2.6, shipY: 143, labelGap: 18, labelSize: 11,
+    w1: '아이디어', w2: '프로토타입', w3: '플레이', w4: '재미!',
+    clearA: 'STAGE CLEAR', clearB: '', clearY: 106,
+    stars: 44, seed: 7, loop: 10,
+    cBg: '#100E1E', cName: '#FFF4E4', cAccent: '#FF9B6E',
+    cSub: '#C9BFD8', cHi: '#FFD27A', cEnemy: '#F4845F', cShip: '#FFF4E4', cMedal: '#F29E4C',
+  };
+
+  // ---- 조절 항목 ----
+  const GROUPS = [
+    ['글자', [
+      ['name', '이름', 'text'], ['title', '직함', 'text'], ['tag1', '소개 1줄', 'text'], ['tag2', '소개 2줄', 'text'],
+      ['textX', '가로 위치', 'range', 0, 200, 1], ['textY', '세로 위치', 'range', 30, 160, 1],
+      ['nameSize', '이름 크기', 'range', 16, 60, 1], ['titleSize', '직함 크기', 'range', 8, 30, 1],
+      ['tagSize', '소개 크기', 'range', 8, 22, 0.5], ['lineGap', '줄 간격', 'range', 10, 40, 1],
+    ]],
+    ['갤러그 무대', [
+      ['stageX', '첫 적 위치', 'range', 200, 450, 1], ['gap', '적 간격', 'range', 40, 120, 1],
+      ['enemyY', '적 높이', 'range', 20, 100, 1], ['scale', '도트 크기', 'range', 1.6, 4, 0.1],
+      ['shipY', '우주선 높이', 'range', 100, 200, 1], ['labelGap', '단어 거리', 'range', 10, 50, 1],
+      ['labelSize', '단어 크기', 'range', 8, 18, 0.5],
+      ['w1', '단어 1', 'text'], ['w2', '단어 2', 'text'], ['w3', '단어 3', 'text'], ['w4', '단어 4', 'text'],
+      ['clearA', '클리어 1줄', 'text'], ['clearB', '클리어 2줄', 'text'], ['clearY', '클리어 높이', 'range', 60, 180, 1],
+    ]],
+    ['배경과 움직임', [
+      ['bannerH', '배너 높이', 'range', 140, 260, 1], ['stars', '별 개수', 'range', 0, 120, 1],
+      ['seed', '별 배치', 'range', 1, 99, 1], ['loop', '한 바퀴(초)', 'range', 5, 20, 0.5],
+    ]],
+    ['색', [
+      ['cBg', '바탕', 'color'],
+      ['cName', '이름', 'color'], ['cAccent', '포인트', 'color'], ['cSub', '보조 글자', 'color'],
+      ['cHi', '켜진 단어·총알', 'color'], ['cEnemy', '적 몸통', 'color'], ['cShip', '우주선', 'color'], ['cMedal', '우주선 장식', 'color'],
+    ]],
+  ];
+
+  let P = Object.assign({}, DEFAULTS);
+  try { Object.assign(P, JSON.parse(localStorage.getItem('profile-editor') || '{}')); } catch (e) {}
+
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const r1 = n => Math.round(n * 10) / 10;
+
+  function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+  // ---- SVG 만들기 (지금 프로필 그림과 같은 구조) ----
+  function build(p, ed) {
+    const D = (name, inner) => ed ? `<g data-drag="${name}">${inner}</g>` : inner;
+    const F = "'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif";
+    const W = 1200, S = W / 680, BHM = p.bannerH, BH = Math.round(BHM * S);
+    const H = BH;
+    const T = p.loop + 's', sc = p.scale;
+    const xs = [0, 1, 2, 3].map(i => p.stageX + i * p.gap);
+    const words = [p.w1, p.w2, p.w3, p.w4];
+    const eH = 7 * sc, eCY = p.enemyY + eH / 2, labelY = p.enemyY + eH + p.labelGap;
+    const shotY = p.shipY - 8, travel = Math.max(10, shotY - (p.enemyY + eH));
+    const mid = (xs[0] + xs[3]) / 2, win = mid - xs[0];
+    const hudL = xs[0] - 30, hudR = Math.min(670, xs[3] + 40);
+
+    const kf = (n, b) => `    @keyframes ${n} { ${b} }\n`;
+    let anim = '';
+    [10, 24, 38, 52].forEach((h, i) => {
+      const k = i + 1, r = 85 + k;
+      anim += kf('d' + k, `0%,${h}% { opacity:1; transform:none; } ${h + 1.5}% { opacity:1; transform:scale(1.5); } ${h + 2.5}% { opacity:0; transform:scale(.2); } ${r}% { opacity:0; transform:translateY(-40px); } ${r + 9}%,100% { opacity:1; transform:none; }`);
+      anim += kf('b' + k, `0%,${h}% { opacity:0; transform:scale(.2); } ${h + 1}% { opacity:1; transform:scale(1); } ${h + 6}%,100% { opacity:0; transform:scale(1.9); }`);
+      anim += kf('l' + k, `0%,${h + .5}% { opacity:0; transform:scale(.6); } ${h + 2.5}% { opacity:1; transform:scale(1.3); } ${h + 4.5}% { transform:scale(1); } 56% { opacity:1; transform:none; } 60%,100% { opacity:0; transform:translateY(-8px) scale(.8); }`);
+    });
+    anim += kf('c0', '0% { opacity:1; } 11% { opacity:0; }');
+    [[11, 25], [25, 39], [39, 53], [53, null]].forEach(([a, b], i) => {
+      anim += kf('c' + (i + 1), `0% { opacity:0; } ${a}% { opacity:1; }` + (b ? ` ${b}% { opacity:0; }` : ''));
+    });
+
+    const rand = rng(p.seed);
+    const field = n => { let o = ''; for (let i = 0; i < n; i++) { const x = 4 + Math.floor(rand() * 672), y = 4 + Math.floor(rand() * (BHM - 8)); o += `<rect${rand() < .3 ? ' class="tw"' : ''} x="${x}" y="${y}" width="2" height="2"/>`; } return o; };
+    const star1 = field(Math.ceil(p.stars * .6)), star2 = field(Math.floor(p.stars * .4));
+    const delay = t => r1(p.loop * t / 10) + 's';
+
+    const E_A = '<path class="ant" d="M0,0h1v1h-1z M9,0h1v1h-1z M1,1h1v1h-1z M8,1h1v1h-1z"/><path class="wing" d="M0,3h2v2h-2z M8,3h2v2h-2z M1,5h1v1h-1z M8,5h1v1h-1z"/><path class="ebody" d="M4,1h2v1h-2z M2,2h6v1h-6z M2,3h1v1h-1z M4,3h2v1h-2z M7,3h1v1h-1z M2,4h6v1h-6z M3,5h4v1h-4z M3,6h1v1h-1z M6,6h1v1h-1z"/><path class="eye" d="M3,3h1v1h-1z M6,3h1v1h-1z"/>';
+    const E_B = '<path class="ant" d="M0,0h1v1h-1z M9,0h1v1h-1z M1,1h1v1h-1z M8,1h1v1h-1z"/><path class="wing" d="M0,1h2v2h-2z M8,1h2v2h-2z M1,3h1v1h-1z M8,3h1v1h-1z"/><path class="ebody" d="M4,1h2v1h-2z M2,2h6v1h-6z M2,3h1v1h-1z M4,3h2v1h-2z M7,3h1v1h-1z M2,4h6v1h-6z M3,5h4v1h-4z M2,6h1v1h-1z M7,6h1v1h-1z"/><path class="eye" d="M3,3h1v1h-1z M6,3h1v1h-1z"/>';
+    const SHIP = '<path class="hull" d="M5,0h1v2h-1z M4,2h3v1h-3z M4,3h1v1h-1z M6,3h1v1h-1z M3,4h2v1h-2z M6,4h2v1h-2z M3,5h5v1h-5z M2,6h3v1h-3z M6,6h3v1h-3z M0,7h4v1h-4z M7,7h4v1h-4z M0,8h2v1h-2z M3,8h5v1h-5z M9,8h2v1h-2z M0,9h1v1h-1z M4,9h1v1h-1z M6,9h1v1h-1z M10,9h1v1h-1z M0,6h1v1h-1z M10,6h1v1h-1z"/><path class="trim" d="M5,3h1v2h-1z M0,5h1v1h-1z M10,5h1v1h-1z"/><path class="cock" d="M5,6h1v1h-1z M4,7h3v1h-3z"/><g class="flame"><path class="fire" d="M4,10h1v2h-1z M6,10h1v2h-1z"/></g>';
+    const BOOM = '<g class="spark1"><rect x="-1" y="-9" width="2" height="4"/><rect x="-1" y="5" width="2" height="4"/><rect x="-9" y="-1" width="4" height="2"/><rect x="5" y="-1" width="4" height="2"/></g><g class="spark2"><rect x="-7" y="-7" width="3" height="3"/><rect x="4" y="-7" width="3" height="3"/><rect x="-7" y="4" width="3" height="3"/><rect x="4" y="4" width="3" height="3"/></g><rect class="core" x="-2" y="-2" width="4" height="4"/>';
+
+    const enemies = xs.map((x, i) => `      <g transform="translate(${r1(x - 5 * sc)},${p.enemyY}) scale(${sc})"><g class="e${i + 1} fb"><use href="#enemy"/></g></g>`).join('\n');
+    const booms = xs.map((x, i) => `    <g transform="translate(${x},${r1(eCY)})"><g class="x${i + 1} fb"><use href="#boom"/></g></g>`).join('\n');
+    const dim = xs.map((x, i) => `<text class="dim" x="${x}" y="${r1(labelY)}">${esc(words[i].replace(/!$/, ''))}</text>`).join('');
+    const lit = xs.map((x, i) => `<text class="lit k${i + 1} fb" x="${x}" y="${r1(labelY)}">${esc(words[i])}</text>`).join('');
+    const shots = xs.map((x, i) => `    <rect class="shot s${i + 1}" x="${x - 1}" y="${shotY}" width="2" height="8"/>`).join('\n');
+
+    const aria = esc(`${p.name} · ${p.title}. ${p.tag1} ${p.tag2} 우주선이 ${words.join(', ')} 적을 차례로 맞히는 애니메이션.`);
+    const ty = p.textY, lg = p.lineGap;
+
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="${aria}">
+  <style>
+    .bg { fill: ${p.cBg}; }
+    .name { fill: ${p.cName}; font: 800 ${p.nameSize}px ${F}; letter-spacing: -0.5px; }
+    .title { fill: ${p.cAccent}; font: 700 ${p.titleSize}px ${F}; }
+    .tag { fill: ${p.cSub}; font: 600 ${p.tagSize}px ${F}; }
+    .hud { font: 700 11px monospace; letter-spacing: 1px; }
+    .hud-l { fill: ${p.cAccent}; } .hud-v { fill: ${p.cName}; }
+    .space { fill: ${p.cBg}; } .star1 { fill: ${p.cSub}; } .star2 { fill: #7F77DD; }
+    .ant { fill: ${p.cSub}; } .wing { fill: #AFA9EC; } .ebody { fill: ${p.cEnemy}; } .eye { fill: #FFF4E4; }
+    .hull { fill: ${p.cShip}; } .trim { fill: ${p.cMedal}; } .cock { fill: #7F77DD; } .fire { fill: ${p.cAccent}; }
+    .spark1 { fill: ${p.cHi}; } .spark2 { fill: ${p.cAccent}; } .core { fill: #FFF4E4; }
+    .shot { fill: ${p.cHi}; opacity: 0; animation: shot ${T} linear infinite; }
+    .dim { transform-box: fill-box; }
+    .dim { fill: #4A4566; font: 700 ${p.labelSize}px ${F}; text-anchor: middle; animation: dimfade ${T} infinite; }
+    .lit { fill: ${p.cHi}; font: 700 ${p.labelSize}px ${F}; text-anchor: middle; opacity: 0; }
+    .clear-a { fill: ${p.cAccent}; font: 700 11px monospace; letter-spacing: 2px; text-anchor: middle; }
+    .clear-b { fill: ${p.cHi}; font: 800 16px ${F}; text-anchor: middle; }
+
+    .fb { transform-box: fill-box; transform-origin: center; }
+    .stars1 { animation: fall 6s linear infinite; } .stars2 { animation: fall 12s linear infinite; }
+    .tw { animation: tw 1.6s ease-in-out infinite; }
+    .flapA { animation: fa .4s steps(1) infinite; } .flapB { animation: fbx .4s steps(1) infinite; }
+    .bob { animation: bob 1.6s ease-in-out infinite; }
+    .flame { animation: fl .12s steps(1) infinite; }
+    .ship { animation: ship ${T} infinite; }
+    .s1 { animation-delay: ${delay(.6)}; } .s2 { animation-delay: ${delay(2)}; } .s3 { animation-delay: ${delay(3.4)}; } .s4 { animation-delay: ${delay(4.8)}; }
+    .e1 { animation: d1 ${T} infinite; } .e2 { animation: d2 ${T} infinite; } .e3 { animation: d3 ${T} infinite; } .e4 { animation: d4 ${T} infinite; }
+    .x1, .x2, .x3, .x4 { opacity: 0; }
+    .x1 { animation: b1 ${T} ease-out infinite; } .x2 { animation: b2 ${T} ease-out infinite; } .x3 { animation: b3 ${T} ease-out infinite; } .x4 { animation: b4 ${T} ease-out infinite; }
+    .k4 { fill: ${p.cAccent}; }
+    .k1 { animation: l1 ${T} infinite; } .k2 { animation: l2 ${T} infinite; } .k3 { animation: l3 ${T} infinite; } .k4 { animation: l4 ${T} infinite; }
+    .clear { opacity: 0; animation: clr ${T} infinite; }
+    .c1, .c2, .c3, .c4 { opacity: 0; }
+    .c0 { animation: c0 ${T} steps(1) infinite; } .c1 { animation: c1 ${T} steps(1) infinite; } .c2 { animation: c2 ${T} steps(1) infinite; } .c3 { animation: c3 ${T} steps(1) infinite; } .c4 { animation: c4 ${T} steps(1) infinite; }
+    @keyframes fall { to { transform: translateY(${BHM}px); } }
+    @keyframes tw { 0%,100% { opacity: .3; } 50% { opacity: 1; } }
+    @keyframes fa { 0% { opacity: 1; } 50% { opacity: 0; } }
+    @keyframes fbx { 0% { opacity: 0; } 50% { opacity: 1; } }
+    @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+    @keyframes fl { 0% { opacity: 1; } 50% { opacity: .35; } }
+    @keyframes ship {
+      0%,14% { transform: translateX(0); animation-timing-function: cubic-bezier(.5,0,.3,1); }
+      19%,28% { transform: translateX(${p.gap}px); animation-timing-function: cubic-bezier(.5,0,.3,1); }
+      33%,42% { transform: translateX(${p.gap * 2}px); animation-timing-function: cubic-bezier(.5,0,.3,1); }
+      47%,56% { transform: translateX(${p.gap * 3}px); animation-timing-function: cubic-bezier(.5,0,.3,1); }
+      62% { transform: translateX(${win}px) translateY(-8px); } 66% { transform: translateX(${win}px) translateY(0); } 70% { transform: translateX(${win}px) translateY(-6px); }
+      74%,86% { transform: translateX(${win}px) translateY(0); animation-timing-function: cubic-bezier(.5,0,.3,1); }
+      96%,100% { transform: translateX(0); } }
+    @keyframes shot { 0% { opacity: 1; transform: translateY(0); } 4% { opacity: 1; transform: translateY(-${r1(travel)}px); } 4.1%,100% { opacity: 0; transform: translateY(-${r1(travel)}px); } }
+    @keyframes dimfade { 0%,56% { opacity: 1; transform: none; } 60%,90% { opacity: 0; transform: translateY(-8px); } 96%,100% { opacity: 1; transform: none; } }
+    @keyframes clr { 0%,57% { opacity: 0; transform: scale(.4); } 61% { opacity: 1; transform: scale(1.15); } 64% { transform: scale(1); } 84% { opacity: 1; transform: scale(1); } 88%,100% { opacity: 0; transform: scale(1); } }
+${anim}
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+      .lit { opacity: 1; }
+    }
+  </style>
+  <defs>
+    <g id="enA" shape-rendering="crispEdges">${E_A}</g>
+    <g id="enB" shape-rendering="crispEdges">${E_B}</g>
+    <g id="enemy"><g class="flapA"><use href="#enA"/></g><g class="flapB"><use href="#enB"/></g></g>
+    <g id="boom">${BOOM}</g>
+    <g id="ship-sprite" shape-rendering="crispEdges">${SHIP}</g>
+    <clipPath id="vp"><rect width="${W}" height="${BH}" rx="28"/></clipPath>
+  </defs>
+
+  <rect class="bg" width="${W}" height="${H}" rx="28"/>
+
+  <!-- 배너: 가로 680 기준 좌표로 그리고 키움. 글자는 왼쪽, 갤러그 무대는 오른쪽 -->
+  <g clip-path="url(#vp)"><g id="banner" transform="scale(${S.toFixed(4)})">
+    <rect class="space" width="680" height="${BHM}"/>
+    <g class="stars1"><g class="star1">${star1}</g><g class="star1" transform="translate(0,-${BHM})">${star1}</g></g>
+    <g class="stars2"><g class="star2">${star2}</g><g class="star2" transform="translate(0,-${BHM})">${star2}</g></g>
+
+    <text class="hud hud-l" x="${hudL}" y="21">1UP</text><text class="hud hud-l" x="${hudR}" y="21" text-anchor="end">HIGH SCORE</text><text class="hud hud-v" x="${hudR}" y="34" text-anchor="end">004000</text>
+    <text class="hud hud-v"><tspan class="c0" x="${hudL}" y="34">000000</tspan><tspan class="c1" x="${hudL}" y="34">001000</tspan><tspan class="c2" x="${hudL}" y="34">002000</tspan><tspan class="c3" x="${hudL}" y="34">003000</tspan><tspan class="c4" x="${hudL}" y="34">004000</tspan></text>
+
+    ${D('stage', `<g class="bob">
+${enemies}
+    </g>
+${booms}`)}
+    ${D('label', `<g>${dim}${lit}</g>`)}
+
+    ${D('clear', `<g class="clear fb"><text class="clear-a" x="${mid}" y="${p.clearY}">${esc(p.clearA)}</text><text class="clear-b" x="${mid}" y="${p.clearY + 20}">${esc(p.clearB)}</text></g>`)}
+
+${shots}
+    ${D('ship', `<g class="ship"><g transform="translate(${r1(xs[0] - 5.5 * sc)},${p.shipY}) scale(${sc})"><use href="#ship-sprite"/></g></g>`)}
+
+    ${D('text', `<text class="name" x="${p.textX}" y="${ty}">${esc(p.name)}</text>
+    <text class="title" x="${p.textX + 2}" y="${ty + p.titleSize + lg * .6}">${esc(p.title)}</text>
+    <text class="tag" x="${p.textX + 2}" y="${ty + p.titleSize + lg * .6 + p.tagSize + lg * .7}">${esc(p.tag1)}</text>
+    <text class="tag" x="${p.textX + 2}" y="${ty + p.titleSize + lg * .6 + p.tagSize * 2 + lg}">${esc(p.tag2)}</text>`)}
+  </g></g>
+
+</svg>`;
+  }
+
+  // ---- 화면 ----
+  const preview = document.getElementById('preview');
+  const msg = document.getElementById('msg');
+  const controls = document.getElementById('controls');
+  const inputs = {};
+
+  function render() {
+    preview.innerHTML = build(P, true);
+    if (editMode.checked) preview.querySelector('svg').insertAdjacentHTML('afterbegin', EDIT_CSS);
+    try { localStorage.setItem('profile-editor', JSON.stringify(P)); } catch (e) {}
+  }
+
+  GROUPS.forEach(([title, items], gi) => {
+    const d = document.createElement('details');
+    if (gi < 2) d.open = true;
+    d.innerHTML = `<summary>${title}</summary>`;
+    items.forEach(([key, label, type, min, max, step]) => {
+      if (type === 'head') { d.insertAdjacentHTML('beforeend', `<p class="award-title">${label}</p>`); return; }
+      const row = document.createElement('div');
+      row.className = 'row' + (type === 'text' ? ' text' : '');
+      const id = 'f_' + key;
+      if (type === 'range') {
+        row.innerHTML = `<label for="${id}">${label}</label><input id="${id}" type="range" min="${min}" max="${max}" step="${step}"><output></output>`;
+      } else {
+        row.innerHTML = `<label for="${id}">${label}</label><input id="${id}" type="${type}">` + (type === 'color' ? '<output></output>' : '');
+      }
+      const input = row.querySelector('input'), out = row.querySelector('output');
+      input.value = P[key];
+      if (out) out.textContent = P[key];
+      input.addEventListener('input', () => {
+        P[key] = type === 'range' ? parseFloat(input.value) : input.value;
+        if (out) out.textContent = P[key];
+        render();
+      });
+      input.addEventListener('change', commit);
+      inputs[key] = { input, out };
+      d.appendChild(row);
+    });
+    controls.appendChild(d);
+  });
+
+
+  // ---- 끌어서 옮기기 + 스냅 ----
+  const editMode = document.getElementById('editMode');
+  const snapOn = document.getElementById('snap');
+  const EDIT_CSS = '<style>* { animation: none !important; } .clear, .lit { opacity: 1 !important; } .x1, .x2, .x3, .x4, .shot { opacity: 0 !important; }</style>';
+  editMode.addEventListener('change', render);
+
+  // 끄는 요소별로 바뀌는 값 (가로, 세로). null 이면 그 방향은 잠금
+  const MOVES = {
+    text:  { x: 'textX', y: 'textY' },
+    stage: { x: 'stageX', y: 'enemyY' },
+    label: { x: null, y: 'labelGap' },
+    ship:  { x: null, y: 'shipY' },
+    clear: { x: null, y: 'clearY' },
+  };
+  const SNAP = 5;  // 가로 680 기준 단위
+  let drag = null;
+
+  const bannerPt = (e) => {
+    const g = preview.querySelector('#banner');
+    return new DOMPoint(e.clientX, e.clientY).matrixTransform(g.getScreenCTM().inverse());
+  };
+  const boxOf = (el) => { const b = el.getBBox(); return { l: b.x, r: b.x + b.width, t: b.y, b: b.y + b.height, cx: b.x + b.width / 2, cy: b.y + b.height / 2 }; };
+
+  function targets(except) {
+    const xs = [0, 24, 340, 656, 680], ys = [0, 16, P.bannerH / 2, P.bannerH - 16, P.bannerH];
+    preview.querySelectorAll('[data-drag]').forEach(el => {
+      if (el.dataset.drag === except) return;
+      const b = boxOf(el);
+      xs.push(b.l, b.cx, b.r); ys.push(b.t, b.cy, b.b);
+    });
+    return { xs, ys };
+  }
+
+  function best(lines, cands) {
+    let hit = null;
+    for (const c of cands) for (const t of lines) {
+      const d = t - c;
+      if (Math.abs(d) <= SNAP && (!hit || Math.abs(d) < Math.abs(hit.d))) hit = { d, at: t };
+    }
+    return hit;
+  }
+
+  function drawGuides(gx, gy) {
+    const g = preview.querySelector('#banner');
+    g.querySelectorAll('.guide').forEach(n => n.remove());
+    const mk = (x1, y1, x2, y2) => g.insertAdjacentHTML('beforeend', `<line class="guide" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#FF4FD8" stroke-width="0.8" stroke-dasharray="3 2"/>`);
+    if (gx !== null) mk(gx, 0, gx, P.bannerH);
+    if (gy !== null) mk(0, gy, 680, gy);
+  }
+
+  preview.addEventListener('pointerdown', (e) => {
+    const el = e.target.closest('[data-drag]');
+    if (!el) return;
+    e.preventDefault();
+    const kind = el.dataset.drag, mv = MOVES[kind];
+    drag = { kind, mv, p0: bannerPt(e), box: boxOf(el), start: { x: mv.x && P[mv.x], y: P[mv.y] }, tg: targets(kind) };
+    if (!editMode.checked) preview.querySelector('svg').insertAdjacentHTML('afterbegin', EDIT_CSS);
+  });
+
+  window.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const pt = bannerPt(e), mv = drag.mv;
+    let dx = mv.x ? pt.x - drag.p0.x : 0, dy = pt.y - drag.p0.y;
+    let gx = null, gy = null;
+    if (snapOn.checked && !e.altKey) {
+      const b = drag.box;
+      if (mv.x) { const h = best(drag.tg.xs, [b.l + dx, b.cx + dx, b.r + dx]); if (h) { dx += h.d; gx = h.at; } }
+      const v = best(drag.tg.ys, [b.t + dy, b.cy + dy, b.b + dy]); if (v) { dy += v.d; gy = v.at; }
+    }
+    if (mv.x) set(mv.x, Math.round(drag.start.x + dx));
+    set(mv.y, Math.round(drag.start.y + dy));
+    render();
+    if (!editMode.checked) preview.querySelector('svg').insertAdjacentHTML('afterbegin', EDIT_CSS);
+    drawGuides(gx, gy);
+  });
+
+  window.addEventListener('pointerup', () => {
+    if (!drag) return;
+    drag = null;
+    render();
+    commit();
+  });
+
+  function set(key, v) {
+    P[key] = v;
+    const f = inputs[key];
+    if (f) { f.input.value = v; if (f.out) f.out.textContent = v; }
+  }
+
+
+  // ---- 되돌리기 (Ctrl+Z) / 다시 하기 (Ctrl+Shift+Z, Ctrl+Y) ----
+  const undoStack = [], redoStack = [];
+  let saved = JSON.stringify(P);
+  function commit() {
+    const now = JSON.stringify(P);
+    if (now === saved) return;
+    undoStack.push(saved);
+    if (undoStack.length > 100) undoStack.shift();
+    redoStack.length = 0;
+    saved = now;
+  }
+  function restore(json) {
+    P = JSON.parse(json);
+    saved = json;
+    for (const k in inputs) { inputs[k].input.value = P[k]; if (inputs[k].out) inputs[k].out.textContent = P[k]; }
+    render();
+  }
+  function undo() {
+    const now = JSON.stringify(P);
+    if (now !== saved) { redoStack.push(now); restore(saved); return flash('되돌렸어요'); }
+    if (!undoStack.length) return flash('더 되돌릴 게 없어요');
+    redoStack.push(now); restore(undoStack.pop()); flash('되돌렸어요');
+  }
+  function redo() {
+    if (!redoStack.length) return flash('다시 할 게 없어요');
+    undoStack.push(JSON.stringify(P)); restore(redoStack.pop()); flash('다시 했어요');
+  }
+  window.addEventListener('keydown', (e) => {
+    if (!(e.ctrlKey || e.metaKey)) return;
+    const k = e.key.toLowerCase();
+    // 글자 칸 안에서는 브라우저 기본 되돌리기를 그대로 씀
+    if (e.target.matches && e.target.matches('input[type=text]')) return;
+    if (k === 'z' && !e.shiftKey) { e.preventDefault(); undo(); }
+    else if ((k === 'z' && e.shiftKey) || k === 'y') { e.preventDefault(); redo(); }
+  });
+
+  function flash(t) { msg.textContent = t; clearTimeout(flash.t); flash.t = setTimeout(() => msg.textContent = '', 2500); }
+
+  document.getElementById('reset').addEventListener('click', () => {
+    P = Object.assign({}, DEFAULTS);
+    for (const k in inputs) { inputs[k].input.value = P[k]; if (inputs[k].out) inputs[k].out.textContent = P[k]; }
+    render(); commit(); flash('처음 값으로 되돌렸어요');
+  });
+  document.getElementById('save').addEventListener('click', () => {
+    const blob = new Blob([build(P)], { type: 'image/svg+xml' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'header-profile.svg';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    flash('header-profile.svg 를 저장했어요. assets 폴더의 같은 파일과 바꿔 주세요');
+  });
+  document.getElementById('copy').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(build(P)); flash('SVG 코드를 복사했어요'); }
+    catch (e) { flash('복사하지 못했어요. SVG 저장을 써 주세요'); }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

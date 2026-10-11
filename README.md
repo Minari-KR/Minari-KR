@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/header-banner.svg" width="100%" alt="Minari · Game System Designer">
+<img src="assets/header-profile.svg" width="100%" alt="Minari · Game Designer. 아이디어를 프로토타입으로 만들고, 플레이하며 재미를 검증합니다. 우주선이 아이디어, 프로토타입, 플레이, 재미! 적을 차례로 맞히는 애니메이션.">
 
 </div>
 
